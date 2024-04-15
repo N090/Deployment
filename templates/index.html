@@ -18,47 +18,28 @@
         #result {
             margin-top: 50px;
         }
+        #uploaded-image {
+            width: 150px; /* Increased by 20% from 300px */
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <h1>Digits Recognition</h1>
-    <form id="upload-form" action="/predict" method="post" enctype="multipart/form-data">
-        <input type="file" name="image" accept="image/*">
+    <form id="upload-form" enctype="multipart/form-data" action="/predict" method="post">
+        <input type="file" id="image-input" name="image" accept="image/*">
         <button type="submit">Predict</button>
     </form>
     <div id="result">
-        <!-- Prediction result will be displayed here -->
+        {% if predicted_number is defined %}
+            <h2>Result</h2>
+            <p>Predicted Digit: {{ predicted_number }}</p>
+            <p>Confidence: {{ confidence }}</p>
+            <img src="data:image/jpeg;base64,{{ image }}" alt="Uploaded Image" id="uploaded-image">
+        {% endif %}
+        {% if error %}
+            <p>Error: {{ error }}</p>
+        {% endif %}
     </div>
-
-    <!-- JavaScript to handle prediction result -->
-    <script>
-        // Function to handle form submission
-        document.getElementById("upload-form").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent default form submission
-            var form = event.target;
-            var formData = new FormData(form);
-
-            // Send POST request to the server
-            fetch(form.action, {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Display prediction result
-                var resultDiv = document.getElementById("result");
-                if (data.error) {
-                    resultDiv.innerHTML = "<p>Error: " + data.error + "</p>";
-                } else {
-                    resultDiv.innerHTML = "<p>Predicted Digit: " + data.prediction + "</p>";
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                var resultDiv = document.getElementById("result");
-                resultDiv.innerHTML = "<p>Error communicating with the server</p>";
-            });
-        });
-    </script>
 </body>
 </html>
