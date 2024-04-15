@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 app = Flask(__name__)
 
 # Load the pre-trained model
-model = load_model('Deployment/digits_recognition_cnn.h5')
+model = load_model('digits_recognition_cnn.h5')
 
 @app.route('/')
 def home():
