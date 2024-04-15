@@ -5,3 +5,4 @@ matplotlib==3.5.1
 gunicorn
 werkzeug==2.0.2
 tensorflow
+tensorRT
