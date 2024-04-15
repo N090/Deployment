@@ -3,43 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digits Recognition</title>
+    <title>Handwritten Digit Recognition</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        h1 {
-            margin-top: 50px;
-        }
-        #upload-form {
-            margin-top: 50px;
-        }
-        #result {
-            margin-top: 50px;
-        }
-        #uploaded-image {
-            width: 150px; /* Increased by 20% from 300px */
-            margin-top: 20px;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>Digits Recognition</h1>
-    <form id="upload-form" enctype="multipart/form-data" action="/predict" method="post">
-        <input type="file" id="image-input" name="image" accept="image/*">
-        <button type="submit">Predict</button>
-    </form>
-    <div id="result">
-        {% if predicted_number is defined %}
-            <h2>Result</h2>
-            <p>Predicted Digit: {{ predicted_number }}</p>
-            <p>Confidence: {{ confidence }}</p>
-            <img src="data:image/jpeg;base64,{{ image }}" alt="Uploaded Image" id="uploaded-image">
+        <h1>Digit Recognition </h1>
+        <p>Upload your file here (Try Drag and Drop)</p>
+
+        <form action="/" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".png, .jpg, .jpeg, .gif, .bmp">
+            <button type="submit" class="btn">Predict</button>
+        </form>
+
+        {% if result %}
+        <img src="data:image/jpeg;base64,{{ image }}" alt="Uploaded Image" id="uploaded-image">
+
+        <div class="result">
+            <p>{{ result }}</p>
+        </div>
         {% endif %}
-        {% if error %}
-            <p>Error: {{ error }}</p>
-        {% endif %}
-    </div>
+
 </body>
 </html>
